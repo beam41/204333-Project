@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FirebaseService } from '../firebase.service';
+import { FirebaseRoomService } from '../Services/firebase-room.service';
 
 @Component({
   selector: 'app-new-room',
@@ -13,12 +13,12 @@ export class NewRoomComponent implements OnInit {
 
   newRoomId: string;
 
-  constructor(private fbs: FirebaseService) {}
+  constructor(private fbr: FirebaseRoomService) {}
 
   ngOnInit() {}
 
   submitForm() {
-    this.fbs.createRoom(this.name.value.trim(), this.pass.value).then(val => (this.newRoomId = val.id));
+    this.fbr.createRoom(this.name.value.trim(), this.pass.value).then(val => (this.newRoomId = val.id));
   }
 
   clearId() {

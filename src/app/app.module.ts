@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // firebase
 import { AngularFireModule } from '@angular/fire';
@@ -43,6 +44,7 @@ import { MemberComponent } from './room/member/member.component';
     MatFormFieldModule,
     MatInputModule,
     MatStepperModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

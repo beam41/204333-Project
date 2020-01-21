@@ -1,6 +1,6 @@
 export class Record {
   id: string;
   name: string;
-  price: number;
+  amount: number;
   isDonation: boolean;
 }

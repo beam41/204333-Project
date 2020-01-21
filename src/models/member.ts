@@ -4,6 +4,5 @@ export class Member {
   id: string;
   name: string;
   records: any;
-  mustPay: number;
   noChange: boolean;
 }

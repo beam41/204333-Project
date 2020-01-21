@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseService } from '../firebase.service';
-import { Observable } from 'rxjs';
+import { FirebaseRoomService } from '../Services/firebase-room.service';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
-import { Member } from 'src/models/member';
 
 @Component({
   selector: 'app-room',
@@ -16,24 +14,47 @@ export class RoomComponent implements OnInit {
   roomId: string;
   room: Room;
   roomLoading = true;
+  pass: string = null;
 
-  constructor(private route: ActivatedRoute, private fbs: FirebaseService) {}
+  constructor(private route: ActivatedRoute, private fbr: FirebaseRoomService) {}
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
-    this.fbs.getPwdInfo(this.roomId).subscribe((val: Roompass) => {
-      if (!val.isNeedPass) {
-        this.loadRoom();
-      }
-      this.isPassed = !val.isNeedPass;
+    this.fbr.getPwdInfo(this.roomId).subscribe({
+      next: (val: Roompass) => {
+        if (!val.isNeedPass || this.pass !== null) {
+          this.loadRoom();
+          return;
+        }
+        this.isPassed = !val.isNeedPass;
+        this.route.queryParams.subscribe({
+          next: params => {
+            if (params.pwd) {
+              this.pass = params.pwd;
+              this.loadRoom();
+            }
+          },
+        });
+      },
     });
   }
 
-  loadRoom(pass: string = '') {
+  loadRoom() {
     this.isPassed = true;
-    this.fbs.getRoom(this.roomId).subscribe((val: Room) => {
-      this.roomLoading = false;
-      this.room = val;
+    this.fbr.getRoom(this.roomId).subscribe({
+      next: (val: Room) => {
+        this.roomLoading = false;
+        this.room = val;
+      },
     });
+  }
+
+  get roomName() {
+    return this.room.name !== '' ? this.room.name : 'Untitled' + this.roomId.slice(0, 5);
+  }
+
+  updateRoomInfo(name: string, pass: string) {
+    this.pass = pass;
+    this.fbr.updateRoomInfo(this.roomId, name, pass);
   }
 }
