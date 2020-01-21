@@ -18,16 +18,14 @@ export class NewRoomComponent implements OnInit {
   ngOnInit() {}
 
   submitForm() {
-    this.fbs.createRoom(this.name.value, this.pass.value).then(val => (this.newRoomId = val.id));
+    this.fbs.createRoom(this.name.value.trim(), this.pass.value).then(val => (this.newRoomId = val.id));
   }
 
-  clearForm() {
-    this.name = new FormControl('');
-    this.pass = new FormControl('');
+  clearId() {
     this.newRoomId = null;
   }
 
   get url(): string {
-    return window.location.origin + '/' + this.newRoomId;
+    return window.location.origin + '/room/' + this.newRoomId;
   }
 }
