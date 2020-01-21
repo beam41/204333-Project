@@ -3,7 +3,7 @@ import { Record } from './record';
 export class Member {
   id: string;
   name: string;
-  record: Record[];
+  records: any;
   mustPay: number;
-  noChange: number;
+  noChange: boolean;
 }

@@ -5,5 +5,5 @@ export class Room {
   name: string;
   password: string;
   extraMoney: number;
-  member: Member[];
+  members: any;
 }

@@ -24,9 +24,10 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { NewRoomComponent } from './new-room/new-room.component';
 import { RoomComponent } from './room/room.component';
+import { MemberComponent } from './room/member/member.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NewRoomComponent, RoomComponent],
+  declarations: [AppComponent, HomeComponent, NewRoomComponent, RoomComponent, MemberComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -4,6 +4,7 @@ import { FirebaseService } from '../firebase.service';
 import { Observable } from 'rxjs';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
+import { Member } from 'src/models/member';
 
 @Component({
   selector: 'app-room',
@@ -13,18 +14,26 @@ import { Roompass } from 'src/models/roompass';
 export class RoomComponent implements OnInit {
   isPassed: boolean = null;
   roomId: string;
-  room: Room[];
-  roomLoading: boolean = true;
+  room: Room;
+  roomLoading = true;
 
   constructor(private route: ActivatedRoute, private fbs: FirebaseService) {}
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
-    this.fbs.getPwdInfo(this.roomId).subscribe((val: Roompass) => (this.isPassed = !val.isNeedPass));
+    this.fbs.getPwdInfo(this.roomId).subscribe((val: Roompass) => {
+      if (!val.isNeedPass) {
+        this.loadRoom();
+      }
+      this.isPassed = !val.isNeedPass;
+    });
   }
 
-  loadRoom(pass) {
+  loadRoom(pass: string = '') {
     this.isPassed = true;
-    this.fbs.getRoom(this.roomId).subscribe(_ => (this.roomLoading = false));
+    this.fbs.getRoom(this.roomId).subscribe((val: Room) => {
+      this.roomLoading = false;
+      this.room = val;
+    });
   }
 }

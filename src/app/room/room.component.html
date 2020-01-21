@@ -14,7 +14,7 @@
     </ng-container>
     <ng-template #roomLoaded>
       <!-- loaded part-->
-      
+      <app-member *ngFor="let mem of room.members" [memberID]="mem.id"></app-member>
     </ng-template>
   </ng-template>
 </ng-template>

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
+import { Member } from 'src/models/member';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,12 @@ export class FirebaseService {
       .collection('roompass')
       .doc(id)
       .valueChanges() as Observable<Roompass>;
+  }
+
+  getMember(id): Observable<Member> {
+    return this.db
+      .collection('members')
+      .doc(id)
+      .valueChanges() as Observable<Member>;
   }
 }
