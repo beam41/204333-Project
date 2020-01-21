@@ -7,13 +7,14 @@ import { FirebaseService } from '../firebase.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  item: any;
+  roomList: any;
 
   constructor(private fbs: FirebaseService) {}
 
   ngOnInit() {
-    this.fbs.get().subscribe(value => {
-      this.item = value;
+    this.fbs.get().subscribe(val => {
+      this.roomList = val;
+      console.log(this.roomList);
     });
   }
 }

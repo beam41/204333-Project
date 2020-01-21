@@ -1,0 +1,23 @@
+<mat-horizontal-stepper linear labelPosition="bottom" #stepper>
+  <mat-step>
+    <mat-form-field>
+      <input matInput placeholder="Name" [formControl]="name" />
+    </mat-form-field>
+    <button mat-button matStepperNext>{{ name.value ? 'Submit' : 'Skip' }}</button>
+  </mat-step>
+  <mat-step>
+    <mat-form-field>
+      <input matInput placeholder="Password" [formControl]="pass" />
+    </mat-form-field>
+    <button mat-button (click)="submitForm(); $event.preventDefault()" matStepperNext>{{ pass.value ? 'Submit' : 'Skip' }}</button>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    {{ url }}
+    <qrcode [qrdata]="url" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    <div>
+      <button mat-button>Start</button>
+      <button mat-button (click)="stepper.reset(); clearForm()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { Room } from 'src/models/room';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +10,10 @@ export class FirebaseService {
   constructor(private db: AngularFirestore) {}
 
   get(): Observable<unknown> {
-    return this.db
-      .collection('test1')
-      .doc('8sJ1pRWDdkY1i8sWinWC')
-      .valueChanges();
+    return this.db.collection('rooms').valueChanges();
+  }
+
+  createRoom(name: string, password: string): Promise<DocumentReference> {
+    return this.db.collection('rooms').add({name, password} as Room);
   }
 }
