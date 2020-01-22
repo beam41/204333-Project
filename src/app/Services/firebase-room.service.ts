@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
 import { Member } from 'src/models/member';
@@ -51,7 +51,7 @@ export class FirebaseRoomService {
   }
 
   addMember(id: string): void {
-    const value = this.db.collection('members').add({ name: '' } as Member);
+    const value = this.db.collection('members').add({ name: '', roomId: id } as Member);
     value.then(val => {
       this.db
         .collection('rooms')

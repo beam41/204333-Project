@@ -17,7 +17,6 @@ export class MemberComponent implements OnInit {
 
   @Input()
   set memberID(id: string) {
-    console.log(id);
     this.fbm.getMember(id).subscribe({
       next: (val: Member) => {
         this.member = { id, ...val };
@@ -32,5 +31,9 @@ export class MemberComponent implements OnInit {
   toggleChange(event) {
     this.member.noChange = event.checked;
     this.fbm.updateMemberChange(this.member.id, event.checked);
+  }
+
+  addRec() {
+    this.fbm.addRecord(this.member.id, this.member.roomId);
   }
 }

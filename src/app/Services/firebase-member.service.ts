@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Member } from 'src/models/member';
+import { Record } from 'src/models/record';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +30,17 @@ export class FirebaseMemberService {
       .collection('members')
       .doc(id)
       .update({ noChange });
+  }
+
+  addRecord(id: string, roomId: string): void {
+    const value = this.db.collection('records').add({ name: '', roomId } as Record);
+    value.then(val => {
+      this.db
+        .collection('members')
+        .doc(id)
+        .update({
+          records: firebase.firestore.FieldValue.arrayUnion(val),
+        });
+    });
   }
 }

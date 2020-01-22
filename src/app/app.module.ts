@@ -26,9 +26,10 @@ import { HomeComponent } from './home/home.component';
 import { NewRoomComponent } from './new-room/new-room.component';
 import { RoomComponent } from './room/room.component';
 import { MemberComponent } from './room/member/member.component';
+import { RecordComponent } from './room/member/record/record.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NewRoomComponent, RoomComponent, MemberComponent],
+  declarations: [AppComponent, HomeComponent, NewRoomComponent, RoomComponent, MemberComponent, RecordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

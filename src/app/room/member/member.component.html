@@ -4,4 +4,6 @@
       (ngModelChange)="memberNameUpdate()" />
   </mat-form-field>
   <mat-slide-toggle (change)="toggleChange($event)" [checked]="member.noChange">No return change</mat-slide-toggle>
+  <button mat-button (click)="addRec()">ADD RECORD</button>
+  <app-record *ngFor="let rec of member.records" [recordID]="rec.id"></app-record>
 </div>
