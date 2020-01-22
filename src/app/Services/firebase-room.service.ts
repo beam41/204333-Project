@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
+import { Member } from 'src/models/member';
 
 @Injectable({
   providedIn: 'root',
@@ -46,5 +48,17 @@ export class FirebaseRoomService {
       .collection('roompass')
       .doc(id)
       .valueChanges() as Observable<Roompass>;
+  }
+
+  addMember(id: string): void {
+    const value = this.db.collection('members').add({ name: '' } as Member);
+    value.then(val => {
+      this.db
+        .collection('rooms')
+        .doc(id)
+        .update({
+          members: firebase.firestore.FieldValue.arrayUnion(val),
+        });
+    });
   }
 }

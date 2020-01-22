@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Member } from 'src/models/member';
 import { FirebaseMemberService } from 'src/app/Services/firebase-member.service';
 

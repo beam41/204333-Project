@@ -22,6 +22,8 @@
         <input matInput autocomplete="off" placeholder="Password" [value]='room.password' #pass />
       </mat-form-field>
       <button mat-button (click)="updateRoomInfo(name.value, pass.value)">SAVE CHANGES</button>
+      <button mat-button (click)="addMember()">ADD MEMBER</button>
+
       <app-member *ngFor="let mem of room.members" [memberID]="mem.id"></app-member>
     </ng-template>
   </ng-template>

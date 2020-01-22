@@ -47,14 +47,19 @@ export class RoomComponent implements OnInit {
         this.room = val;
       },
     });
+    this.pass = null;
   }
 
   get roomName() {
-    return this.room.name !== '' ? this.room.name : 'Untitled' + this.roomId.slice(0, 5);
+    return this.room.name !== '' ? this.room.name : 'Untitled-' + this.roomId.slice(0, 5);
   }
 
   updateRoomInfo(name: string, pass: string) {
     this.pass = pass;
     this.fbr.updateRoomInfo(this.roomId, name, pass);
+  }
+
+  addMember() {
+    this.fbr.addMember(this.roomId);
   }
 }
