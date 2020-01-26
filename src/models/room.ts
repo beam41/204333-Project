@@ -6,4 +6,5 @@ export class Room {
   password: string;
   extraMoney: number;
   members: any;
+  timeStamp: number;
 }

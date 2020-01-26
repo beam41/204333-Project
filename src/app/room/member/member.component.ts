@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Member } from 'src/models/member';
-import { FirebaseMemberService } from 'src/app/Services/firebase-member.service';
+import { Record } from 'src/models/record';
+import { FirebaseMemberService } from 'src/app/services/firebase-member.service';
+import { CalculateService } from 'src/app/services/calculate.service';
 
 @Component({
   selector: 'app-member',
@@ -11,7 +13,7 @@ export class MemberComponent implements OnInit {
   member: Member;
   mustPay: number;
 
-  constructor(private fbm: FirebaseMemberService) {}
+  constructor(private fbm: FirebaseMemberService, private calc: CalculateService) {}
 
   ngOnInit() {}
 
@@ -20,6 +22,7 @@ export class MemberComponent implements OnInit {
     this.fbm.getMember(id).subscribe({
       next: (val: Member) => {
         this.member = { id, ...val };
+        this.calc.addMember(this.member);
       },
     });
   }
@@ -35,5 +38,15 @@ export class MemberComponent implements OnInit {
 
   addRec() {
     this.fbm.addRecord(this.member.id, this.member.roomId);
+  }
+
+  delMem() {
+    this.calc.delMember(this.member.id);
+    try {
+      this.member.records.forEach(element => {
+        this.calc.delRecord(element.id);
+      });
+    } catch (e) {}
+    this.fbm.delMember(this.member.id, this.member.roomId);
   }
 }

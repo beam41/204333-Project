@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FirebaseRoomService } from '../Services/firebase-room.service';
+import { FirebaseRoomService } from '../services/firebase-room.service';
 
 @Component({
   selector: 'app-new-room',

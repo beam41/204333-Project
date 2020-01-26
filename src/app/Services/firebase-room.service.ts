@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
+import { firestore } from 'firebase/app';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
 import { Member } from 'src/models/member';
@@ -20,7 +20,7 @@ export class FirebaseRoomService {
   }
 
   createRoom(name: string, password: string): Promise<DocumentReference> {
-    const value = this.db.collection('rooms').add({ name, password } as Room);
+    const value = this.db.collection('rooms').add({ name, password, timeStamp: Date.now() } as Room);
     value.then(val => {
       this.db
         .collection('roompass')
@@ -43,6 +43,13 @@ export class FirebaseRoomService {
     });
   }
 
+  updateRoomExtraMo(id: string, extraMoney: number): void {
+    const value = this.db
+      .collection('rooms')
+      .doc(id)
+      .update({ extraMoney } as Room);
+  }
+
   getPwdInfo(id: string): Observable<Roompass> {
     return this.db
       .collection('roompass')
@@ -57,7 +64,7 @@ export class FirebaseRoomService {
         .collection('rooms')
         .doc(id)
         .update({
-          members: firebase.firestore.FieldValue.arrayUnion(val),
+          members: firestore.FieldValue.arrayUnion(val),
         });
     });
   }

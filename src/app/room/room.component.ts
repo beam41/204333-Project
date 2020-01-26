@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FirebaseRoomService } from '../Services/firebase-room.service';
+import { FirebaseRoomService } from '../services/firebase-room.service';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
 
@@ -39,12 +39,40 @@ export class RoomComponent implements OnInit {
     });
   }
 
+  private memberArrNotEqual(a: any[], b: any[]): boolean {
+    if (a.length !== b.length) {
+      return true;
+    }
+    let eq = false;
+    a.forEach(val => {
+      const found = b.find(ele => ele.id > val.id);
+      if (!found) {
+        eq = true;
+      }
+    });
+  }
+
   loadRoom() {
     this.isPassed = true;
     this.fbr.getRoom(this.roomId).subscribe({
       next: (val: Room) => {
         this.roomLoading = false;
-        this.room = val;
+        if (!this.room) {
+          this.room = val;
+          return;
+        }
+        if (this.memberArrNotEqual(this.room.members, val.members)) {
+          this.room.members = val.members;
+        }
+        if (!(this.room.name === val.name)) {
+          this.room.name = val.name;
+        }
+        if (!(this.room.password === val.password)) {
+          this.room.members = val.members;
+        }
+        if (!(this.room.extraMoney === val.extraMoney)) {
+          this.room.extraMoney = val.extraMoney;
+        }
       },
     });
     this.pass = null;
@@ -57,6 +85,11 @@ export class RoomComponent implements OnInit {
   updateRoomInfo(name: string, pass: string) {
     this.pass = pass;
     this.fbr.updateRoomInfo(this.roomId, name, pass);
+  }
+
+  updateRoomExtraMo() {
+    this.room.extraMoney = +this.room.extraMoney;
+    this.fbr.updateRoomExtraMo(this.roomId, +this.room.extraMoney);
   }
 
   addMember() {

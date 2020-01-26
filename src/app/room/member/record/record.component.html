@@ -7,6 +7,6 @@
     <input matInput autocomplete="off" placeholder="Amount" [(ngModel)]="record.amount"
       (ngModelChange)="recordAmountUpdate()" />
   </mat-form-field>
-  <mat-slide-toggle (change)="toggleDonateChange($event)" [checked]="record.isDonation">Donate
-  </mat-slide-toggle>
+  <mat-slide-toggle (change)="toggleDonateChange($event)" [checked]="record.isDonation">Donate</mat-slide-toggle>
+  <button mat-button (click)="delRec()">DELETE RECORD</button>
 </div>

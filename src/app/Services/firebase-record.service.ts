@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Record } from 'src/models/record';
 import { Observable } from 'rxjs';
+import { firestore } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,15 @@ export class FirebaseRecordService {
       .collection('records')
       .doc(id)
       .update({ isDonation });
+  }
+
+  delRecord(id: string, memberId: string): void {
+    const documentRef = this.db.collection('records').doc(id).ref;
+    this.db
+      .collection('members')
+      .doc(memberId)
+      .update({
+        members: firestore.FieldValue.arrayRemove(documentRef),
+      });
   }
 }
