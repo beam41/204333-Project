@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { CalculateService } from 'src/app/services/calculate.service';
+import { FirebaseMemberService } from 'src/app/services/firebase-member.service';
 import { Member } from 'src/models/member';
 import { Record } from 'src/models/record';
-import { FirebaseMemberService } from 'src/app/services/firebase-member.service';
-import { CalculateService } from 'src/app/services/calculate.service';
 
 @Component({
   selector: 'app-member',

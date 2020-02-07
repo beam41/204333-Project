@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ActivatedRoute } from '@angular/router';
+import { CalculateService } from 'src/app/services/calculate.service';
 import { FirebaseRoomService } from '../services/firebase-room.service';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
@@ -16,7 +18,7 @@ export class RoomComponent implements OnInit {
   roomLoading = true;
   pass: string = null;
 
-  constructor(private route: ActivatedRoute, private fbr: FirebaseRoomService) {}
+  constructor(private route: ActivatedRoute, private fbr: FirebaseRoomService, private calc: CalculateService) {}
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
@@ -40,16 +42,20 @@ export class RoomComponent implements OnInit {
   }
 
   private memberArrNotEqual(a: any[], b: any[]): boolean {
-    if (a.length !== b.length) {
+    try {
+      if (a.length !== b.length) {
+        return true;
+      }
+      let eq = false;
+      a.forEach(val => {
+        const found = b.find(ele => ele.id > val.id);
+        if (!found) {
+          eq = true;
+        }
+      });
+    } catch {
       return true;
     }
-    let eq = false;
-    a.forEach(val => {
-      const found = b.find(ele => ele.id > val.id);
-      if (!found) {
-        eq = true;
-      }
-    });
   }
 
   loadRoom() {
@@ -89,6 +95,7 @@ export class RoomComponent implements OnInit {
 
   updateRoomExtraMo() {
     this.room.extraMoney = +this.room.extraMoney;
+    this.calc.extraMoney = this.room.extraMoney;
     this.fbr.updateRoomExtraMo(this.roomId, +this.room.extraMoney);
   }
 

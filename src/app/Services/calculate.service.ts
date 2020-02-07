@@ -6,10 +6,15 @@ import { Record } from 'src/models/record';
   providedIn: 'root',
 })
 export class CalculateService {
-  records = new Object();
-  members = new Object();
+  private records = new Object();
+  private members = new Object();
+  private extraMo = 0;
 
   constructor() {}
+
+  set extraMoney(amount: number) {
+    this.extraMo = amount;
+  }
 
   addRecord(rec: Record) {
     this.records[rec.id] = rec;
@@ -26,4 +31,6 @@ export class CalculateService {
   delMember(id: string) {
     delete this.members[id];
   }
+
+  calcPrice(memId: string) {}
 }

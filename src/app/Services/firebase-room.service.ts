@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { firestore } from 'firebase/app';
+
+import { Injectable } from '@angular/core';
+import { Member } from 'src/models/member';
+import { Observable } from 'rxjs';
 import { Room } from 'src/models/room';
 import { Roompass } from 'src/models/roompass';
-import { Member } from 'src/models/member';
+import { firestore } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',

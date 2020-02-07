@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { Member } from 'src/models/member';
+import { Observable } from 'rxjs';
 import { Record } from 'src/models/record';
 import { firestore } from 'firebase/app';
 
@@ -33,7 +33,7 @@ export class FirebaseMemberService {
   }
 
   addRecord(id: string, roomId: string): void {
-    const value = this.db.collection('records').add({ name: '', roomId } as Record);
+    const value = this.db.collection('records').add({ name: '', roomId, memberId: id } as Record);
     value.then(val => {
       this.db
         .collection('members')

@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Record } from 'src/models/record';
-import { FirebaseRecordService } from 'src/app/services/firebase-record.service';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { CalculateService } from 'src/app/services/calculate.service';
+import { FirebaseRecordService } from 'src/app/services/firebase-record.service';
+import { Record } from 'src/models/record';
 
 @Component({
   selector: 'app-record',
@@ -10,7 +11,6 @@ import { CalculateService } from 'src/app/services/calculate.service';
 })
 export class RecordComponent implements OnInit {
   record: Record;
-  @Input() memberId: string;
 
   constructor(private fbrec: FirebaseRecordService, private calc: CalculateService) {}
 
@@ -31,7 +31,7 @@ export class RecordComponent implements OnInit {
   }
 
   recordAmountUpdate() {
-    this.fbrec.updateRecordAmount(this.record.id, this.record.amount);
+    this.fbrec.updateRecordAmount(this.record.id, +this.record.amount);
   }
 
   toggleDonateChange(event) {
@@ -41,6 +41,6 @@ export class RecordComponent implements OnInit {
 
   delRec() {
     this.calc.delRecord(this.record.id);
-    this.fbrec.delRecord(this.record.id, this.memberId);
+    this.fbrec.delRecord(this.record.id, this.record.memberId);
   }
 }

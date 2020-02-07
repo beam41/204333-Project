@@ -1,7 +1,4 @@
-<ng-container *ngIf="isPassed === null; else loaded">
-  <p>loading</p>
-</ng-container>
-<ng-template #loaded>
+<ng-container *ngIf="isPassed !== null; else loading">
   <ng-container *ngIf="!isPassed; else passBlock">
     <mat-form-field>
       <input matInput autocomplete="off" placeholder="Password" #pass />
@@ -9,26 +6,31 @@
     <button mat-button (click)="loadRoom(pass)">ENTER</button>
   </ng-container>
   <ng-template #passBlock>
-    <ng-container *ngIf="roomLoading; else roomLoaded">
-      <p>loadddddddddddd</p>
-    </ng-container>
-    <ng-template #roomLoaded>
-      <!-- loaded part-->
+    <ng-container *ngIf="!roomLoading; else loading">
       <h1>{{ roomName }}</h1>
       <mat-form-field>
-        <input matInput autocomplete="off" placeholder="Name" [value]='room.name' #name />
+        <input matInput autocomplete="off" placeholder="Name" [value]="room.name" #name />
       </mat-form-field>
       <mat-form-field>
-        <input matInput autocomplete="off" placeholder="Password" [value]='room.password' #pass />
+        <input matInput autocomplete="off" placeholder="Password" [value]="room.password" #pass />
       </mat-form-field>
       <button mat-button (click)="updateRoomInfo(name.value, pass.value)">SAVE CHANGES</button>
       <mat-form-field>
-        <input matInput autocomplete="off" placeholder="Extra Money" [(ngModel)]="room.extraMoney"
-          (ngModelChange)="updateRoomExtraMo()" />
+        <input
+          matInput
+          type="number"
+          autocomplete="off"
+          placeholder="Extra Money"
+          [(ngModel)]="room.extraMoney"
+          (ngModelChange)="updateRoomExtraMo()"
+        />
       </mat-form-field>
       <button mat-button (click)="addMember()">ADD MEMBER</button>
 
       <app-member *ngFor="let mem of room.members" [memberID]="mem.id"></app-member>
-    </ng-template>
+    </ng-container>
   </ng-template>
+</ng-container>
+<ng-template #loading>
+  <p>Loading</p>
 </ng-template>

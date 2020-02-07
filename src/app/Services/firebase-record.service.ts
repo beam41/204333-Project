@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Record } from 'src/models/record';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Record } from 'src/models/record';
 import { firestore } from 'firebase/app';
 
 @Injectable({
@@ -44,7 +44,7 @@ export class FirebaseRecordService {
       .collection('members')
       .doc(memberId)
       .update({
-        members: firestore.FieldValue.arrayRemove(documentRef),
+        records: firestore.FieldValue.arrayRemove(documentRef),
       });
   }
 }
