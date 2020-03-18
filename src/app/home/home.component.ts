@@ -6,7 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  savedRoom = [];
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const temp = JSON.parse(localStorage.getItem('saveRooms')) || {};
+    
+  }
+
+  // get roomName() {
+  //   return this.room.name !== '' ? this.room.name : 'Untitled-' + this.roomId.slice(0, 5);
+  // }
 }

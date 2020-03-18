@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CalculateService } from 'src/app/services/calculate.service';
 import { FirebaseRoomService } from '../services/firebase-room.service';
 import { Room } from 'src/models/room';
@@ -12,76 +12,33 @@ import { Roompass } from 'src/models/roompass';
   styleUrls: ['./room.component.scss'],
 })
 export class RoomComponent implements OnInit {
-  isPassed: boolean = null;
   roomId: string;
   room: Room;
   roomLoading = true;
-  pass: string = null;
+  allow = false;
+  passError = false;
 
-  constructor(private route: ActivatedRoute, private fbr: FirebaseRoomService, private calc: CalculateService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private fbr: FirebaseRoomService,
+    private calc: CalculateService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
-    this.fbr.getPwdInfo(this.roomId).subscribe({
-      next: (val: Roompass) => {
-        if (!val.isNeedPass || this.pass !== null) {
-          this.loadRoom();
-          return;
-        }
-        this.isPassed = !val.isNeedPass;
-        this.route.queryParams.subscribe({
-          next: params => {
-            if (params.pwd) {
-              this.pass = params.pwd;
-              this.loadRoom();
-            }
-          },
-        });
-      },
-    });
-  }
-
-  private memberArrNotEqual(a: any[], b: any[]): boolean {
-    try {
-      if (a.length !== b.length) {
-        return true;
-      }
-      let eq = false;
-      a.forEach(val => {
-        const found = b.find(ele => ele.id > val.id);
-        if (!found) {
-          eq = true;
-        }
-      });
-    } catch {
-      return true;
-    }
-  }
-
-  loadRoom() {
-    this.isPassed = true;
     this.fbr.getRoom(this.roomId).subscribe({
       next: (val: Room) => {
+        if (val.password === '') {
+          this.allow = true;
+        }
+        this.room = val;
         this.roomLoading = false;
-        if (!this.room) {
-          this.room = val;
-          return;
-        }
-        if (this.memberArrNotEqual(this.room.members, val.members)) {
-          this.room.members = val.members;
-        }
-        if (!(this.room.name === val.name)) {
-          this.room.name = val.name;
-        }
-        if (!(this.room.password === val.password)) {
-          this.room.members = val.members;
-        }
-        if (!(this.room.extraMoney === val.extraMoney)) {
-          this.room.extraMoney = val.extraMoney;
-        }
+        const temp = JSON.parse(localStorage.getItem('saveRooms')) || {};
+        temp[this.roomId] = val.name;
+        localStorage.setItem('saveRooms', JSON.stringify(temp));
       },
     });
-    this.pass = null;
   }
 
   get roomName() {
@@ -89,7 +46,6 @@ export class RoomComponent implements OnInit {
   }
 
   updateRoomInfo(name: string, pass: string) {
-    this.pass = pass;
     this.fbr.updateRoomInfo(this.roomId, name, pass);
   }
 
@@ -101,5 +57,18 @@ export class RoomComponent implements OnInit {
 
   addMember() {
     this.fbr.addMember(this.roomId);
+  }
+
+  openDialog() {
+    // now its del room but we need dialog
+    this.fbr.delRoom(this.roomId).then(_ => this.router.navigate(['']));
+  }
+
+  validate(pass) {
+    if (pass === this.room.password) {
+      this.allow = true;
+    } else {
+      this.passError = true;
+    }
   }
 }

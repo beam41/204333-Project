@@ -21,41 +21,21 @@ export class FirebaseRoomService {
   }
 
   createRoom(name: string, password: string): Promise<DocumentReference> {
-    const value = this.db.collection('rooms').add({ name, password, timeStamp: Date.now() } as Room);
-    value.then(val => {
-      this.db
-        .collection('roompass')
-        .doc(val.id)
-        .set({ isNeedPass: !(password === '') } as Roompass);
-    });
-    return value;
+    return this.db.collection('rooms').add({ name, password, timeStamp: Date.now() } as Room);
   }
 
-  updateRoomInfo(id: string, name: string, password: string): void {
-    const value = this.db
+  updateRoomInfo(id: string, name: string, password: string): Promise<void> {
+    return this.db
       .collection('rooms')
       .doc(id)
       .update({ name, password } as Room);
-    value.then(_ => {
-      this.db
-        .collection('roompass')
-        .doc(id)
-        .set({ isNeedPass: !(password === '') } as Roompass);
-    });
   }
 
   updateRoomExtraMo(id: string, extraMoney: number): void {
-    const value = this.db
+    this.db
       .collection('rooms')
       .doc(id)
       .update({ extraMoney } as Room);
-  }
-
-  getPwdInfo(id: string): Observable<Roompass> {
-    return this.db
-      .collection('roompass')
-      .doc(id)
-      .valueChanges() as Observable<Roompass>;
   }
 
   addMember(id: string): void {
@@ -68,5 +48,12 @@ export class FirebaseRoomService {
           members: firestore.FieldValue.arrayUnion(val),
         });
     });
+  }
+
+  delRoom(id: string): Promise<void> {
+    return this.db
+      .collection('rooms')
+      .doc(id)
+      .delete()
   }
 }

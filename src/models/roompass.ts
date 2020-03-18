@@ -1,4 +1,4 @@
 export class Roompass {
   isNeedPass: boolean;
-  timeStamp: number;
+  password: string;
 }

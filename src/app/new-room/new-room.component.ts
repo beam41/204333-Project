@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FormControl } from '@angular/forms';
 import { FirebaseRoomService } from '../services/firebase-room.service';
 
@@ -23,6 +24,8 @@ export class NewRoomComponent implements OnInit {
 
   clearId() {
     this.newRoomId = null;
+    this.name = new FormControl('');
+    this.pass = new FormControl('');
   }
 
   get url(): string {
