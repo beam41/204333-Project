@@ -3,7 +3,7 @@
     <mat-form-field>
       <input matInput autocomplete="off" placeholder="Password" #pass />
     </mat-form-field>
-    <button mat-button (click)="loadRoom(pass)">ENTER</button>
+    <button mat-button (click)="loadRoom()">ENTER</button>
   </ng-container>
   <ng-template #passBlock>
     <ng-container *ngIf="!roomLoading; else loading">
