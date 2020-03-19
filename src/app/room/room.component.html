@@ -7,7 +7,7 @@
     <button mat-button (click)="validate(passenter.value)">ENTER</button>
   </ng-container>
   <ng-template #passBlock>
-    <h1>{{ roomName }}</h1>
+    <h1>{{ room.name | roomName: roomId }}</h1>
     <mat-form-field>
       <input matInput autocomplete="off" placeholder="Name" [value]="room.name" #name />
     </mat-form-field>

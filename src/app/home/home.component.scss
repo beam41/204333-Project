@@ -1,0 +1,59 @@
+@use "../../assets/color";
+
+.home {
+  box-sizing: border-box;
+  padding: 2rem 0;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+}
+
+.logo {
+  height: 300px;
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+h1,
+p {
+  margin: 0;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin-top: 2rem;
+  font-size: 4em;
+}
+
+p {
+  color: color.lightness(white, -20%);
+}
+
+.gridbox {
+  padding: 0 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.grid-cover {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.mat-card-subtitle {
+  margin: 0;
+}
+
+.mat-card {
+  cursor: pointer;
+  &:hover {
+    background: color.lightness(#424242, 3%);
+  }
+}

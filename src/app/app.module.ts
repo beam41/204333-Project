@@ -22,7 +22,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+// firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
@@ -32,8 +37,20 @@ import { QRCodeModule } from 'angularx-qrcode';
 
 // env
 import { environment } from '../environments/environment';
+
+// pipe
+import { RoomNamePipe } from './room-name.pipe';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NewRoomComponent, RoomComponent, MemberComponent, RecordComponent, DelDialogComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NewRoomComponent,
+    RoomComponent,
+    MemberComponent,
+    RecordComponent,
+    DelDialogComponent,
+    RoomNamePipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,6 +68,10 @@ import { environment } from '../environments/environment';
     MatStepperModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

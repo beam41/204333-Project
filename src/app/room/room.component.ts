@@ -41,10 +41,6 @@ export class RoomComponent implements OnInit {
     });
   }
 
-  get roomName() {
-    return this.room.name !== '' ? this.room.name : 'Untitled-' + this.roomId.slice(0, 5);
-  }
-
   updateRoomInfo(name: string, pass: string) {
     this.fbr.updateRoomInfo(this.roomId, name, pass);
   }

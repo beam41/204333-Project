@@ -1,28 +1,57 @@
-<mat-horizontal-stepper linear labelPosition="bottom" #stepper>
-  <mat-step [stepControl]="name">
-    <mat-form-field>
-      <input matInput placeholder="Name" [formControl]="name" />
-    </mat-form-field>
-    <button mat-button matStepperNext>{{ name.value ? 'SUBMIT' : 'SKIP' }}</button>
-  </mat-step>
-  <mat-step [stepControl]="pass">
-    <mat-form-field>
-      <input matInput autocomplete="off" placeholder="Password" [formControl]="pass" />
-    </mat-form-field>
-    <button mat-button (click)="submitForm(); $event.preventDefault()"
-      matStepperNext>{{ pass.value ? 'SUBMIT' : 'SKIP' }}</button>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <ng-container *ngIf='newRoomId'>
-      {{ url }}
-      <qrcode [qrdata]="url + '?pwd=' + pass.value" [width]="256" [errorCorrectionLevel]="'M'" colorDark="#424242">
-      </qrcode>
-    </ng-container>
-    <div>
-      <button mat-button [routerLink]="['/room', newRoomId]" [queryParams]="{ pwd: pass.value }"
-        [disabled]="!newRoomId">START</button>
-      <button mat-button (click)="stepper.reset(); clearId()">RESET</button>
-    </div>
-  </mat-step>
-</mat-horizontal-stepper>
+<div class="nr-container">
+  <mat-horizontal-stepper linear labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="name">
+      <ng-template matStepLabel>Name</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Name" [formControl]="name" />
+      </mat-form-field>
+      <div class="btn-box">
+        <button mat-raised-button color="primary" class="np-btn" matStepperNext>
+          {{ name.value ? 'NEXT' : 'SKIP' }}
+        </button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="pass">
+      <ng-template matStepLabel>Password</ng-template>
+      <mat-form-field>
+        <input matInput autocomplete="off" placeholder="Password" [formControl]="pass" />
+      </mat-form-field>
+      <div class="btn-box">
+        <button
+          mat-raised-button
+          color="primary"
+          class="np-btn"
+          (click)="submitForm(); $event.preventDefault()"
+          matStepperNext
+        >
+          {{ pass.value ? 'NEXT' : 'SKIP' }}
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <div class="qr-box">
+        <ng-container *ngIf="newRoomId; else qrload">
+          <button mat-button matTooltip="Press to copy!" matTooltipPosition="above" (click)="copy()">{{ url }}</button>
+          <qrcode [qrdata]="url" [width]="256" [errorCorrectionLevel]="'M'" colorDark="#424242"> </qrcode>
+        </ng-container>
+        <ng-template #qrload>
+          <mat-spinner color="accent"></mat-spinner>
+        </ng-template>
+      </div>
+      <div class="btn-box">
+        <button class="btn-padd" mat-button (click)="stepper.reset(); clearId()">RESET</button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="btn-padd"
+          [routerLink]="['/room', newRoomId]"
+          [queryParams]="{ pwd: pass.value }"
+          [disabled]="!newRoomId"
+        >
+          START
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

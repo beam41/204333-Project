@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   savedRoom = [];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     const temp = JSON.parse(localStorage.getItem('saveRooms')) || {};
-    
+    this.savedRoom = Object.entries(temp);
   }
-
-  // get roomName() {
-  //   return this.room.name !== '' ? this.room.name : 'Untitled-' + this.roomId.slice(0, 5);
-  // }
 }

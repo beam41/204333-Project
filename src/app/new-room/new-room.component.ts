@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormControl } from '@angular/forms';
 import { FirebaseRoomService } from '../services/firebase-room.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-new-room',
@@ -14,7 +15,7 @@ export class NewRoomComponent implements OnInit {
 
   newRoomId: string;
 
-  constructor(private fbr: FirebaseRoomService) {}
+  constructor(private fbr: FirebaseRoomService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {}
 
@@ -30,5 +31,17 @@ export class NewRoomComponent implements OnInit {
 
   get url(): string {
     return window.location.origin + '/room/' + this.newRoomId;
+  }
+
+  copy() {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', this.url);
+      e.preventDefault();
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
+    this.snackBar.open('Copied!', 'OK', {
+      duration: 2000,
+    });
   }
 }
