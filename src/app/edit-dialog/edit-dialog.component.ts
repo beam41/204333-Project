@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EditDialog } from './node_modules/src/models/editDialog';
-import { FirebaseRoomService } from './node_modules/src/app/services/firebase-room.service';
+import { FirebaseRoomService } from 'src/app/services/firebase-room.service';
 import { Router } from '@angular/router';
+import { EditDialog } from 'src/models/editDialog';
 
 @Component({
   selector: 'app-edit-dialog',
