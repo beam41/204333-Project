@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 // firebase
 import { AngularFireModule } from '@angular/fire';
@@ -72,6 +73,7 @@ import { RoomNamePipe } from './room-name.pipe';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -51,9 +51,7 @@ p {
   margin: 0;
 }
 
-.mat-card {
-  cursor: pointer;
-  &:hover {
-    background: color.lightness(#424242, 3%);
-  }
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
 }
