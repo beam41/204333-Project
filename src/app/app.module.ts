@@ -41,6 +41,7 @@ import { environment } from '../environments/environment';
 
 // pipe
 import { RoomNamePipe } from './room-name.pipe';
+import { EditDialogComponent } from './room/edit-dialog/edit-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { RoomNamePipe } from './room-name.pipe';
     RecordComponent,
     DelDialogComponent,
     RoomNamePipe,
+    EditDialogComponent,
   ],
   imports: [
     BrowserModule,

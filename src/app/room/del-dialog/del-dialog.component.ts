@@ -1,28 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { EditDialog } from 'src/models/editDialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FirebaseRoomService } from 'src/app/services/firebase-room.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-del-dialog',
   template: `
-    <!-- <h1 mat-dialog-title>Do you want to delete</h1>
+    <h1 mat-dialog-title>Do you want to delete {{ data.room.name }}</h1>
     <div mat-dialog-content>
-      <p>Do you really want to delete? <span class="red">This room will gone forever!</span></p>
-      <mat-form-field>
-        <mat-label>Favorite Animal</mat-label>
-        <input matInput [(ngModel)]="data.animal">
-      </mat-form-field>
+      <p>Do you really want to delete?</p>
+      <p><strong class="warn">This room will gone forever!</strong></p>
     </div>
     <div mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">No Thanks</button>
-      <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-    </div> -->
+      <button mat-raised-button color="primary" (click)="onYesClick()">YES</button>
+      <button mat-flat-button mat-dialog-close>NO</button>
+    </div>
   `,
-  styles: ['.red { color: red}']
+  styles: [
+    '.warn { color: #f44336}',
+    `
+      .mat-dialog-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+    `,
+  ],
 })
-export class DelDialogComponent implements OnInit {
+export class DelDialogComponent {
+  constructor(
+    private dialogRef: MatDialogRef<DelDialogComponent>,
+    private fbr: FirebaseRoomService,
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: EditDialog,
+  ) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  onYesClick() {
+    this.fbr.delRoom(this.data.roomId).then(_ => this.router.navigate(['']));
+    this.dialogRef.close();
   }
-
 }

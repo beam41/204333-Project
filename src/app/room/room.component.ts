@@ -4,7 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CalculateService } from 'src/app/services/calculate.service';
 import { FirebaseRoomService } from '../services/firebase-room.service';
 import { Room } from 'src/models/room';
-import { Roompass } from 'src/models/roompass';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+}
 
 @Component({
   selector: 'app-room',
@@ -16,13 +25,15 @@ export class RoomComponent implements OnInit {
   room: Room;
   roomLoading = true;
   allow = false;
-  passError = false;
+  formPassControl = new FormControl('');
+  formPassMatcher = new MyErrorStateMatcher();
 
   constructor(
     private route: ActivatedRoute,
     private fbr: FirebaseRoomService,
     private calc: CalculateService,
     private router: Router,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -55,16 +66,19 @@ export class RoomComponent implements OnInit {
     this.fbr.addMember(this.roomId);
   }
 
-  openDialog() {
-    // now its del room but we need dialog
-    this.fbr.delRoom(this.roomId).then(_ => this.router.navigate(['']));
+  openDialog(): void {
+    this.dialog.open(EditDialogComponent, {
+      width: '300px',
+      data: { room: this.room, roomId: this.roomId },
+    });
   }
 
-  validate(pass) {
+  validate() {
+    let pass = this.formPassControl.value;
     if (pass === this.room.password) {
       this.allow = true;
     } else {
-      this.passError = true;
+      this.formPassControl.setErrors({ incorrect: true });
     }
   }
 }

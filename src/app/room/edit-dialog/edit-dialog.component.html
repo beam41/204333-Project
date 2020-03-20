@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Edit Room: {{ data.room.name }}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput autocomplete="off" placeholder="Name" [value]="data.room.name" #name />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput autocomplete="off" placeholder="Password" [value]="''" #pass />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <div>
+    <button matTooltip="Remove Room!" matTooltipPosition="above" (click)="openDialog()" mat-icon-button color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <div>
+    <button mat-button mat-dialog-close>BACK</button>
+    <button mat-raised-button color="primary" (click)="updateRoomInfo(name.value, pass.value)">SAVE</button>
+  </div>
+</div>

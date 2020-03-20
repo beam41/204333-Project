@@ -3,7 +3,7 @@
     <input matInput autocomplete="off" placeholder="Name" [(ngModel)]="member.name"
       (ngModelChange)="memberNameUpdate()" />
   </mat-form-field>
-  <mat-slide-toggle (change)="toggleChange($event)" [checked]="member.noChange">No return change</mat-slide-toggle>
+  <mat-slide-toggle (change)="toggleChange($event)" [checked]="member.noChange">DO NOT CHANGE</mat-slide-toggle>
   <button mat-button (click)="addRec()">ADD RECORD</button>
   <button mat-button (click)="delMem()">DELETE MEMBER</button>
   <app-record *ngFor="let rec of member.records" [recordID]="rec.id"></app-record>

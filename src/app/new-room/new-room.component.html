@@ -6,7 +6,8 @@
         <input matInput placeholder="Name" [formControl]="name" />
       </mat-form-field>
       <div class="btn-box">
-        <button mat-raised-button color="primary" class="np-btn" matStepperNext>
+        <button mat-button color="accent" [routerLink]="['']">EXIT</button>
+        <button mat-raised-button color="primary" class="np-btn btn-padd" matStepperNext>
           {{ name.value ? 'NEXT' : 'SKIP' }}
         </button>
       </div>
@@ -14,13 +15,14 @@
     <mat-step [stepControl]="pass">
       <ng-template matStepLabel>Password</ng-template>
       <mat-form-field>
-        <input matInput autocomplete="off" placeholder="Password" [formControl]="pass" />
+        <input matInput type="password" placeholder="Password" [formControl]="pass" />
       </mat-form-field>
       <div class="btn-box">
+        <button mat-button color="accent" [routerLink]="['']">EXIT</button>
         <button
           mat-raised-button
           color="primary"
-          class="np-btn"
+          class="np-btn btn-padd"
           (click)="submitForm(); $event.preventDefault()"
           matStepperNext
         >
@@ -40,16 +42,16 @@
         </ng-template>
       </div>
       <div class="btn-box">
+        <button mat-button color="accent" [routerLink]="['']">EXIT</button>
         <button class="btn-padd" mat-button (click)="stepper.reset(); clearId()">RESET</button>
         <button
           mat-raised-button
           color="primary"
           class="btn-padd"
           [routerLink]="['/room', newRoomId]"
-          [queryParams]="{ pwd: pass.value }"
           [disabled]="!newRoomId"
         >
-          START
+          ENTER
         </button>
       </div>
     </mat-step>
