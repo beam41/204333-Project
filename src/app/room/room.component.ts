@@ -27,6 +27,7 @@ export class RoomComponent implements OnInit {
   allow = false;
   formPassControl = new FormControl('');
   formPassMatcher = new MyErrorStateMatcher();
+  memPayDat = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class RoomComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.calc.memberPay.subscribe(val => (this.memPayDat = val));
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.fbr.getRoom(this.roomId).subscribe({
       next: (val: Room) => {
@@ -44,6 +46,7 @@ export class RoomComponent implements OnInit {
           this.allow = true;
         }
         this.room = val;
+        this.calc.setExtraMoney(this.room.extraMoney);
         this.roomLoading = false;
         const temp = JSON.parse(localStorage.getItem('saveRooms')) || {};
         temp[this.roomId] = val.name;
@@ -58,7 +61,7 @@ export class RoomComponent implements OnInit {
 
   updateRoomExtraMo() {
     this.room.extraMoney = +this.room.extraMoney;
-    this.calc.extraMoney = this.room.extraMoney;
+    this.calc.setExtraMoney(this.room.extraMoney);
     this.fbr.updateRoomExtraMo(this.roomId, +this.room.extraMoney);
   }
 

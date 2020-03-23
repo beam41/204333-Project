@@ -12,7 +12,7 @@ import { Record } from 'src/models/record';
 })
 export class MemberComponent implements OnInit {
   member: Member;
-  mustPay: number;
+  @Input() mustPayDat: object;
 
   constructor(private fbm: FirebaseMemberService, private calc: CalculateService) {}
 

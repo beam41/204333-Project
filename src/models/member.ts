@@ -7,3 +7,11 @@ export class Member {
   records: any;
   noChange: boolean;
 }
+
+export class MemberPay {
+  id: string;
+  name: string;
+  noChange: boolean;
+  total: number;
+  toPay: number | null;
+}

@@ -4,6 +4,5 @@ export class Record {
   memberId: string;
   name: string;
   amount: number;
-
   isDonation: boolean;
 }

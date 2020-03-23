@@ -1,0 +1,17 @@
+.headcontain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.two {
+    padding-bottom: 16px;
+  }
+}
+
+.card-con {
+  background-color: #2a2a2a;
+  border-radius: 4px;
+  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.12);
+  display: grid;
+  gap: 1rem;
+}

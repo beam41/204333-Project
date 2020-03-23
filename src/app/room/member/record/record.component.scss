@@ -1,0 +1,13 @@
+.mat-card {
+  background: #353535;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr  1fr;
+  gap: 0.5rem;
+
+  & > * {
+    place-self: center;
+  }
+}

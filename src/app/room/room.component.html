@@ -38,7 +38,7 @@
       </div>
       <div class="mid">
         <div>
-          <button mat-button (click)="addMember()">ADD MEMBER</button>
+          <button mat-raised-button color="primary" (click)="addMember()">ADD MEMBER</button>
         </div>
         <mat-form-field>
           <input
@@ -50,7 +50,9 @@
           />
         </mat-form-field>
       </div>
-      <app-member *ngFor="let mem of room.members" [memberID]="mem.id"></app-member>
+      <div class="mem-con">
+        <app-member *ngFor="let mem of room.members" [memberID]="mem.id" [mustPayDat]="memPayDat[mem.id]"></app-member>
+      </div>
     </div>
   </ng-template>
 </ng-container>
