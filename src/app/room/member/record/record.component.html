@@ -20,13 +20,13 @@
       <mat-form-field class="grid-2">
         <input
           matInput
+          pattern="^[\d]*.?[\d]*$"
           autocomplete="off"
           placeholder="Amount"
-          [(ngModel)]="record.amount"
+          [(ngModel)]="am"
           (ngModelChange)="recordAmountUpdate()"
         />
       </mat-form-field>
-
       <button
         class="grid-4"
         matTooltip="Delete Record!"

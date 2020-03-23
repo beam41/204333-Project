@@ -11,6 +11,7 @@ import { Record } from 'src/models/record';
 })
 export class RecordComponent implements OnInit {
   record: Record;
+  am = '';
 
   constructor(private fbrec: FirebaseRecordService, private calc: CalculateService) {}
 
@@ -21,6 +22,7 @@ export class RecordComponent implements OnInit {
     this.fbrec.getRecord(id).subscribe({
       next: (val: Record) => {
         this.record = { id, ...val };
+        this.am = val.amount.toString();
         this.calc.addRecord(this.record);
       },
     });
@@ -31,7 +33,8 @@ export class RecordComponent implements OnInit {
   }
 
   recordAmountUpdate() {
-    this.fbrec.updateRecordAmount(this.record.id, +this.record.amount);
+    this.am = this.am.replace(/[^\d.]/g, '');
+    this.fbrec.updateRecordAmount(this.record.id, +this.am);
   }
 
   toggleDonateChange(event) {

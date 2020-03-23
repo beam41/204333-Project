@@ -43,7 +43,7 @@ export class CalculateService {
     let sum = 0;
     Object.values(this.records).forEach(val => {
       if (!val.isDonation) {
-        sum += val.amount;
+        sum += val.amount || 0;
       }
     });
     return sum;
@@ -54,7 +54,7 @@ export class CalculateService {
       let total = 0;
       Object.values(this.records).forEach(rec => {
         if (rec.memberId === val[0] && !rec.isDonation) {
-          total += rec.amount;
+          total += rec.amount || 0;
         }
       });
       return { id: val[0], name: val[1].name, noChange: val[1].noChange, total } as MemberPay;
@@ -65,7 +65,7 @@ export class CalculateService {
     let sum = 0;
     Object.values(this.records).forEach(val => {
       if (val.isDonation) {
-        sum += val.amount;
+        sum += val.amount || 0;
       }
     });
     return sum;
@@ -79,7 +79,7 @@ export class CalculateService {
     const totalPaySplit = (sumPrice - extaMo) / memlen;
     let noChangeExcess = 0;
     memberList.forEach(val => {
-      let toPay = totalPaySplit - val.total;
+      const toPay = totalPaySplit - val.total;
       if (toPay < 0 && val.noChange) {
         noChangeExcess += toPay;
         val.toPay = 0;

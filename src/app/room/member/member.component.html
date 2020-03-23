@@ -18,12 +18,25 @@
       <div class="headcontain two">
         <button mat-stroked-button (click)="addRec()">ADD RECORD</button>
         <mat-slide-toggle color="primary" (change)="toggleChange($event)" [checked]="member.noChange">
-          Don't change
+          Don't return
         </mat-slide-toggle>
       </div>
     </div>
     <div class="card-con">
       <app-record *ngFor="let rec of member.records" [recordID]="rec.id"></app-record>
+    </div>
+    <div class="bot-con">
+      <p *ngIf="mustPayDat.toPay > 0">
+        You have to pay <span class="tp">{{ mustPayDat.toPay.toFixed(2) }}</span
+        ><small> baht?</small>
+      </p>
+      <p *ngIf="mustPayDat.toPay < 0">
+        You'll get <span class="tp">{{ (-mustPayDat.toPay).toFixed(2) }}</span
+        ><small> baht?</small> return
+      </p>
+      <p *ngIf="mustPayDat.toPay === 0">
+        You don't have to do anything <small *ngIf="member.noChange"> because you select no return</small>
+      </p>
     </div>
   </mat-card>
 </div>

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { CalculateService } from 'src/app/services/calculate.service';
 import { FirebaseMemberService } from 'src/app/services/firebase-member.service';
-import { Member } from 'src/models/member';
+import { Member, MemberPay } from 'src/models/member';
 import { Record } from 'src/models/record';
 
 @Component({
@@ -12,7 +12,7 @@ import { Record } from 'src/models/record';
 })
 export class MemberComponent implements OnInit {
   member: Member;
-  @Input() mustPayDat: object;
+  @Input() mustPayDat: MemberPay;
 
   constructor(private fbm: FirebaseMemberService, private calc: CalculateService) {}
 

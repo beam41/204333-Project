@@ -13,6 +13,7 @@ import { NewRoomComponent } from './new-room/new-room.component';
 import { RoomComponent } from './room/room.component';
 import { RecordComponent } from './room/member/record/record.component';
 import { DelDialogComponent } from './room/del-dialog/del-dialog.component';
+import { EditDialogComponent } from './room/edit-dialog/edit-dialog.component';
 
 // angularMat
 import { MatDialogModule } from '@angular/material/dialog';
@@ -39,9 +40,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 // env
 import { environment } from '../environments/environment';
 
-// pipe
+// pipe/directive
 import { RoomNamePipe } from './room-name.pipe';
-import { EditDialogComponent } from './room/edit-dialog/edit-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
