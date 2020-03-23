@@ -40,7 +40,6 @@ export class RoomComponent implements OnInit {
 
   ngOnInit() {
     this.calc.memberPay.subscribe(val => {
-      console.log(val);
       this.memPayDat = val;
     });
     this.roomId = this.route.snapshot.paramMap.get('roomId');
