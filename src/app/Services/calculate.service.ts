@@ -39,6 +39,12 @@ export class CalculateService {
     this.memPay();
   }
 
+  clearDat() {
+    this.records = new Object();
+    this.members = new Object();
+    this.extraMo = 0;
+  }
+
   calcPrice() {
     let sum = 0;
     Object.values(this.records).forEach(val => {

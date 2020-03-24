@@ -28,11 +28,11 @@
     <div class="bot-con">
       <p *ngIf="mustPayDat.toPay > 0">
         You have to pay <span class="tp">{{ mustPayDat.toPay.toFixed(2) }}</span
-        ><small> baht?</small>
+        ><small> baht</small>
       </p>
       <p *ngIf="mustPayDat.toPay < 0">
         You'll get <span class="tp">{{ (-mustPayDat.toPay).toFixed(2) }}</span
-        ><small> baht?</small> return
+        ><small> baht</small> return
       </p>
       <p *ngIf="mustPayDat.toPay === 0">
         You don't have to do anything <small *ngIf="member.noChange"> because you select no return</small>

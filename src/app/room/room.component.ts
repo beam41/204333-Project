@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalculateService } from 'src/app/services/calculate.service';
@@ -20,7 +20,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   roomId: string;
   room: Room;
   roomLoading = true;
@@ -49,14 +49,18 @@ export class RoomComponent implements OnInit {
           this.allow = true;
         }
         this.room = val;
-        this.extraMo = this.room.extraMoney.toString();
-        this.calc.setExtraMoney(+this.room.extraMoney);
+        this.extraMo = (this.room.extraMoney || 0).toString();
+        this.calc.setExtraMoney(+this.room.extraMoney || 0);
         this.roomLoading = false;
         const temp = JSON.parse(localStorage.getItem('saveRooms')) || {};
         temp[this.roomId] = val.name;
         localStorage.setItem('saveRooms', JSON.stringify(temp));
       },
     });
+  }
+
+  ngOnDestroy() {
+    this.calc.clearDat();
   }
 
   updateRoomInfo(name: string, pass: string) {

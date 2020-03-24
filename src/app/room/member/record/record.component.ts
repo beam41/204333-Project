@@ -22,7 +22,7 @@ export class RecordComponent implements OnInit {
     this.fbrec.getRecord(id).subscribe({
       next: (val: Record) => {
         this.record = { id, ...val };
-        this.am = val.amount.toString();
+        this.am = (val.amount || 0).toString();
         this.calc.addRecord(this.record);
       },
     });
